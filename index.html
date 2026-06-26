@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bang Afan Kebab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9933A;
+    --gold-light: #E8B55A;
+    --gold-pale: #F5E8CE;
+    --charcoal: #1A1612;
+    --brown-dark: #2C1F10;
+    --brown-mid: #5C3D1A;
+    --cream: #FAF6EE;
+    --cream-dark: #F0E8D4;
+    --text: #1A1612;
+    --text-muted: #6B5740;
+    --red-accent: #C0392B;
+    --green-accent: #27652A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(26, 22, 18, 0.96);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 68px;
+    border-bottom: 1px solid rgba(201, 147, 58, 0.3);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: #fff; }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--charcoal) !important;
+    padding: 8px 20px !important;
+    border-radius: 4px;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--charcoal) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--charcoal);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(201,147,58,0.12) 0%, transparent 65%);
+  }
+
+  .hero-content {
+    padding: 120px 5% 80px 8%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(201,147,58,0.15);
+    border: 1px solid rgba(201,147,58,0.4);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--charcoal);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 14px 28px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+  .hero-visual {
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-plate {
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: conic-gradient(from 180deg, #3D2A12, #5C3D1A, #7A5225, #5C3D1A, #3D2A12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  }
+
+  .hero-plate::before {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    border: 2px solid rgba(201,147,58,0.3);
+  }
+
+  .hero-emoji {
+    font-size: 9rem;
+    line-height: 1;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 80px;
+    left: 8%;
+    right: 5%;
+    display: flex;
+    gap: 3rem;
+    z-index: 2;
+  }
+
+  .stat {
+    text-align: left;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* SECTION SHARED */
+  section { padding: 100px 8%; }
+
+  .section-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .section-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.75;
+  }
+
+  .section-header { margin-bottom: 3.5rem; }
+
+  /* MENU */
+  #menu { background: var(--cream); }
+
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .filter-btn {
+    background: none;
+    border: 1px solid rgba(92,61,26,0.25);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 7px 18px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--brown-dark);
+    color: var(--gold-light);
+    border-color: var(--brown-dark);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .menu-card {
+    background: #fff;
+    border: 1px solid rgba(201,147,58,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(92,61,26,0.12);
+  }
+
+  .card-img {
+    width: 100%;
+    height: 180px;
+    background: var(--brown-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, rgba(44,31,16,0.5));
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--red-accent);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .card-badge.green { background: var(--green-accent); }
+
+  .card-body {
+    padding: 1.25rem 1.25rem 1rem;
+  }
+
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.35rem;
+  }
+
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(201,147,58,0.15);
+  }
+
+  .card-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+  }
+
+  .card-price span {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-cart {
+    background: var(--charcoal);
+    color: var(--gold-light);
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-cart:hover { background: var(--brown-mid); }
+
+  /* KEUNGGULAN */
+  #keunggulan {
+    background: var(--charcoal);
+    color: #fff;
+  }
+
+  #keunggulan .section-title { color: #fff; }
+  #keunggulan .section-desc { color: rgba(255,255,255,0.55); }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .feature-item {
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(201,147,58,0.2);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .feature-item:hover {
+    border-color: rgba(201,147,58,0.5);
+    background: rgba(201,147,58,0.05);
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.65;
+  }
+
+  /* PROMO */
+  #promo {
+    background: var(--gold-pale);
+    padding: 80px 8%;
+  }
+
+  .promo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .promo-card {
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .promo-card.dark {
+    background: var(--brown-dark);
+    color: #fff;
+  }
+
+  .promo-card.light {
+    background: #fff;
+    border: 1px solid rgba(201,147,58,0.25);
+  }
+
+  .promo-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .promo-card.light .promo-label { color: var(--gold); }
+
+  .promo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .promo-card.dark .promo-title { color: #fff; }
+  .promo-card.light .promo-title { color: var(--charcoal); }
+
+  .promo-body {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .promo-card.dark .promo-body { color: rgba(255,255,255,0.6); }
+  .promo-card.light .promo-body { color: var(--text-muted); }
+
+  .promo-emoji {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1rem;
+    font-size: 4rem;
+    opacity: 0.25;
+  }
+
+  /* TESTIMONIAL */
+  #ulasan { background: var(--cream-dark); }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testi-card {
+    background: #fff;
+    border: 1px solid rgba(201,147,58,0.15);
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+
+  .stars {
+    color: var(--gold);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+  }
+
+  .testi-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--brown-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--charcoal);
+  }
+
+  .author-loc {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+  }
+
+  /* PESAN */
+  #pesan {
+    background: var(--charcoal);
+    padding: 80px 8%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  #pesan .section-title { color: #fff; }
+  #pesan .section-desc { color: rgba(255,255,255,0.5); }
+
+  .order-info {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+  }
+
+  .info-row span:first-child { font-size: 1.2rem; }
+
+  .order-form {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,147,58,0.2);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group select option { background: var(--brown-dark); color: #fff; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .btn-order {
+    width: 100%;
+    background: var(--gold);
+    color: var(--charcoal);
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-order:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: #0D0B08;
+    padding: 60px 8% 40px;
+    border-top: 1px solid rgba(201,147,58,0.15);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand .nav-logo {
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+    max-width: 240px;
+  }
+
+  .footer-col h4 {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-col ul li a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul li a:hover { color: var(--gold-light); }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-bottom p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(201,147,58,0.25);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+    background: none;
+  }
+
+  .social-link:hover {
+    border-color: var(--gold);
+    background: rgba(201,147,58,0.1);
+  }
+
+  /* CART FLOATING */
+  .cart-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 200;
+    background: var(--gold);
+    color: var(--charcoal);
+    border: none;
+    border-radius: 50px;
+    padding: 14px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 30px rgba(201,147,58,0.4);
+    transition: transform 0.2s, background 0.2s;
+    animation: slideUp 0.5s ease 1s both;
+  }
+
+  .cart-float:hover { transform: scale(1.04); background: var(--gold-light); }
+
+  .cart-count {
+    background: var(--charcoal);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* NOTIFICATION */
+  .notif {
+    position: fixed;
+    top: 80px;
+    right: 1.5rem;
+    background: var(--charcoal);
+    color: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 300;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+  }
+
+  .notif.show { transform: translateX(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { height: 50vh; }
+    .hero-plate { width: 280px; height: 280px; }
+    .hero-emoji { font-size: 6rem; }
+    .hero-stats { bottom: auto; top: 100px; left: auto; right: auto; position: relative; padding: 0 5%; }
+    #pesan { grid-template-columns: 1fr; }
+    .promo-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 70px 5%; }
+    .hero-content { padding: 100px 5% 50px; }
+    footer { padding: 50px 5% 30px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    #pesan { padding: 70px 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NOTIFIKASI -->
+<div class="notif" id="notif">✓ Menu ditambahkan ke keranjang!</div>
+
+<!-- FLOATING CART -->
+<button class="cart-float" onclick="scrollToPesan()">
+  🛒 Keranjang
+  <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Bang <span>Afan Kebab</span></div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#keunggulan">Keunggulan</a></li>
+    <li><a href="#promo">Promo</a></li>
+    <li><a href="#ulasan">Ulasan</a></li>
+    <li><a href="#pesan" class="nav-cta">Pesan Sekarang</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+  <div class="hero-content">
+    <div class="hero-badge">🌙 Halal Certified</div>
+    <h1>Kebab <em>Asli</em><br>Selera Kebab</h1>
+    <p class="hero-desc">Daging premium dipanggang sempurna, dibungkus roti hangat dengan saus rahasia warisan resep Timur Tengah. Pengalaman kuliner autentik langsung ke tanganmu.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Lihat Menu</a>
+      <a href="#pesan" class="btn-ghost">Pesan Sekarang</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-plate">
+      <span class="hero-emoji">🌯</span>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header">
+    <div class="section-eyebrow">Menu Pilihan</div>
+    <h2 class="section-title">Cita Rasa yang Tak<br>Terlupakan</h2>
+    <p class="section-desc">Setiap porsi dibuat segar dari bahan-bahan pilihan berkualitas tinggi.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterMenu('semua', this)">Semua</button>
+    <button class="filter-btn" onclick="filterMenu('kebab', this)">Kebab</button>
+    <button class="filter-btn" onclick="filterMenu('box', this)">Box Meal</button>
+    <button class="filter-btn" onclick="filterMenu('minuman', this)">Minuman</button>
+    <button class="filter-btn" onclick="filterMenu('paket', this)">Paket Hemat</button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid">
+    <!-- Item menu -->
+  </div>
+</section>
+
+<!-- KEUNGGULAN -->
+<section id="keunggulan">
+  <div class="section-header">
+    <div class="section-eyebrow">Mengapa Kami</div>
+    <h2 class="section-title">Kualitas yang Tidak<br>Pernah Kompromi</h2>
+    <p class="section-desc">Standar tinggi di setiap tahap, dari pemilihan bahan hingga ke meja Anda.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-item">
+      <span class="feature-icon">🥩</span>
+      <div class="feature-title">Daging Premium</div>
+      <p class="feature-desc">Daging sapi dan ayam pilihan, dipanggang di atas arang kayu selama 8+ jam untuk cita rasa optimal.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🌿</span>
+      <div class="feature-title">100% Halal</div>
+      <p class="feature-desc">Tersertifikasi MUI. Semua bahan dijamin halal, segar, dan bebas bahan pengawet berbahaya.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">👨‍🍳</span>
+      <div class="feature-title">Chef Berpengalaman</div>
+      <p class="feature-desc">Tim koki kami terlatih langsung di Istanbul, membawa teknik memasak autentik ke Jakarta.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🚴</span>
+      <div class="feature-title">Antar 30 Menit</div>
+      <p class="feature-desc">Armada kurir khusus kami memastikan pesanan tiba dalam kondisi panas dan segar tepat waktu.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">📦</span>
+      <div class="feature-title">Kemasan Higienis</div>
+      <p class="feature-desc">Kemasan food-grade berlapis, menjaga kualitas makanan dari dapur hingga ke tangan Anda.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">⭐</span>
+      <div class="feature-title">4.9 Rating</div>
+      <p class="feature-desc">Lebih dari 12.000 ulasan bintang 5 dari pelanggan setia di seluruh Jabodetabek.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO -->
+<section id="promo" style="background: var(--gold-pale); padding: 100px 8%;">
+  <div class="section-header">
+    <div class="section-eyebrow">Penawaran Terbatas</div>
+    <h2 class="section-title">Promo Spesial Hari Ini</h2>
+    <p class="section-desc">Jangan lewatkan penawaran terbaik kami yang hanya berlaku untuk waktu terbatas.</p>
+  </div>
+  <div class="promo-grid">
+    <div class="promo-card dark">
+      <span class="promo-label">Flash Sale • Berakhir Malam Ini</span>
+      <h3 class="promo-title">Beli 2 Gratis<br>1 Minuman</h3>
+      <p class="promo-body">Pesan minimum 2 kebab apapun dan dapatkan minuman segar gratis pilihan Anda. Berlaku setiap hari pukul 15.00–18.00.</p>
+      <a href="#pesan" class="btn-primary">Ambil Promo</a>
+      <span class="promo-emoji">🎁</span>
+    </div>
+    <div class="promo-card light">
+      <span class="promo-label">Paket Keluarga</span>
+      <h3 class="promo-title" style="color: var(--charcoal);">Family Box<br>Hemat 30%</h3>
+      <p class="promo-body" style="color: var(--text-muted);">4 kebab + 2 box meal + 4 minuman dalam satu paket eksklusif. Sempurna untuk makan malam bersama keluarga.</p>
+      <a href="#pesan" class="btn-primary">Pesan Paket</a>
+      <span class="promo-emoji">👨‍👩‍👧‍👦</span>
+    </div>
+  </div>
+</section>
+
+<!-- ULASAN -->
+<section id="ulasan">
+  <div class="section-header">
+    <div class="section-eyebrow">Ulasan Pelanggan</div>
+    <h2 class="section-title">Ribuan Pelanggan<br>Puas Berbicara</h2>
+    <p class="section-desc">Apa kata mereka yang sudah merasakan cita rasa Kebab Bang Afan.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Kebabnya luar biasa! Dagingnya juicy banget, rasanya beda dari kebab-kebab lain yang pernah saya coba. Saus rahasianya bikin ketagihan!"</p>
+      <div class="testi-author">
+        <div class="avatar">🧑</div>
+        <div>
+          <div class="author-name">Rizki Pratama</div>
+          <div class="author-loc">📍 Kemang, Jakarta Selatan</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Delivery cepat, kemasan rapi, dan yang paling penting rasanya tidak mengecewakan! Sudah jadi langganan tetap keluarga saya selama 6 bulan."</p>
+      <div class="testi-author">
+        <div class="avatar">👩</div>
+        <div>
+          <div class="author-name">Sari Indrawati</div>
+          <div class="author-loc">📍 Bekasi Utara</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Family box-nya worth it banget untuk 4 orang! Cukup mengenyangkan dan harganya terjangkau. Kebab ayamnya jadi favorit anak-anak."</p>
+      <div class="testi-author">
+        <div class="avatar">👨</div>
+        <div>
+          <div class="author-name">Budi Santoso</div>
+          <div class="author-loc">📍 Depok, Jawa Barat</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PESAN -->
+<section id="pesan">
+  <div>
+    <div class="section-eyebrow">Pesan Sekarang</div>
+    <h2 class="section-title" style="color:#fff;">Siap Dikirim ke<br>Pintu Anda</h2>
+    <p class="section-desc">Isi form di samping dan kami akan segera memproses pesanan Anda.</p>
+    <div class="order-info">
+      <div class="info-row">
+        <span>⏰</span>
+        <span>Buka setiap hari, 10.00 – 22.00 WIB</span>
+      </div>
+      <div class="info-row">
+        <span>📞</span>
+        <span>WhatsApp: 0812-3456-7890</span>
+      </div>
+      <div class="info-row">
+        <span>📍</span>
+        <span>Area pengiriman: Jabodetabek</span>
+      </div>
+      <div class="info-row">
+        <span>💳</span>
+        <span>Transfer, QRIS, COD tersedia</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-form">
+    <div class="form-title">Detail Pesanan</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nama</label>
+        <input type="text" placeholder="Nama lengkap" id="fNama">
+      </div>
+      <div class="form-group">
+        <label>No. WhatsApp</label>
+        <input type="text" placeholder="08xx-xxxx-xxxx" id="fWa">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Alamat Lengkap</label>
+      <input type="text" placeholder="Jl., No. Rumah, Kelurahan, Kota" id="fAlamat">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Pilih Menu</label>
+        <select id="fMenu">
+          <option value="">-- Pilih menu --</option>
+          <option>Kebab Sapi Premium</option>
+          <option>Kebab Ayam Spesial</option>
+          <option>Double Beef Box</option>
+          <option>Paket Keluarga Sultan</option>
+          <option>Kebab Vegetarian</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Jumlah Porsi</label>
+        <input type="number" min="1" max="20" value="1" id="fJumlah">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Catatan Tambahan</label>
+      <textarea rows="3" placeholder="Contoh: tidak pedas, extra saus, tanpa bawang..." id="fCatatan" style="resize: vertical;"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Metode Pembayaran</label>
+      <select id="fPembayaran">
+        <option>Transfer Bank (BCA/BRI/Mandiri)</option>
+        <option>QRIS</option>
+        <option>COD (Bayar di Tempat)</option>
+        <option>OVO / GoPay / Dana</option>
+      </select>
+    </div>
+    <button class="btn-order" onclick="submitOrder()">🌯 Pesan via WhatsApp</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Bang <span style="color:#fff;">Afan Kebab</span></span>
+      <p>Menghadirkan cita rasa kebab autentik Timur Tengah ke meja makan Anda sejak 2018. Halal, segar, lezat.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#menu">Kebab Sapi</a></li>
+        <li><a href="#menu">Kebab Ayam</a></li>
+        <li><a href="#menu">Box Meal</a></li>
+        <li><a href="#menu">Paket Hemat</a></li>
+        <li><a href="#menu">Minuman</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Informasi</h4>
+      <ul>
+        <li><a href="#">Tentang Kami</a></li>
+        <li><a href="#">Sertifikat Halal</a></li>
+        <li><a href="#promo">Promo</a></li>
+        <li><a href="#ulasan">Ulasan</a></li>
+        <li><a href="#">Karir</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <ul>
+        <li><a href="#">📞 0812-3456-7890</a></li>
+        <li><a href="#">📧 bangafankebab@gmail.com</a></li>
+        <li><a href="#">📍 Serang, Ciceri Indah</a></li>
+        <li><a href="#">Go-Food / Grabfood</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Bang Afan Kebab. Semua hak dilindungi.</p>
+    <div class="social-links">
+      <button class="social-link" title="Instagram">📸</button>
+      <button class="social-link" title="TikTok">🎵</button>
+      <button class="social-link" title="Facebook">💬</button>
+      <button class="social-link" title="WhatsApp">📱</button>
+    </div>
+  </div>
+</footer>
+
+<script>
+const menus = [
+  { id: 1, nama: "Kebab Sapi Premium", kategori: "kebab", emoji: "🌯", harga: 35000, badge: "Terlaris", badgeType: "", desc: "Daging sapi segar dipanggang 8 jam dengan bumbu khas Timur Tengah dan saus spesial." },
+  { id: 2, nama: "Kebab Ayam Spesial", kategori: "kebab", emoji: "🌯", harga: 28000, badge: "", badgeType: "", desc: "Ayam fillet berbumbu rempah pilihan, dilengkapi sayuran segar dan mayo pedas." },
+  { id: 3, nama: "Kebab Double Beef", kategori: "kebab", emoji: "🌯", harga: 48000, badge: "Extra", badgeType: "", desc: "Porsi double daging sapi untuk selera besar. Lebih banyak, lebih puas, lebih sultan!" },
+  { id: 4, nama: "Kebab Vegetarian", kategori: "kebab", emoji: "🥗", harga: 22000, badge: "Sehat", badgeType: "green", desc: "Pilihan sehat dari sayuran pilihan, jamur, dan saus tahini tanpa daging." },
+  { id: 5, nama: "Double Beef Box", kategori: "box", emoji: "📦", harga: 55000, badge: "Promo", badgeType: "", desc: "Kebab double beef + nasi pilaf + minuman. Paket lengkap untuk makan siang Anda." },
+  { id: 6, nama: "Chicken Box Meal", kategori: "box", emoji: "🍱", harga: 42000, badge: "", badgeType: "", desc: "Kebab ayam + kentang goreng + saus ranch. Kenyang dan lezat dalam satu kotak." },
+  { id: 7, nama: "Ayran Segar", kategori: "minuman", emoji: "🥛", harga: 12000, badge: "", badgeType: "", desc: "Minuman yogurt tradisional Turki yang menyegarkan, pasangan sempurna kebab." },
+  { id: 8, nama: "Lemon Ice Tea", kategori: "minuman", emoji: "🍋", harga: 10000, badge: "", badgeType: "", desc: "Teh lemon dingin segar, manis dan menyegarkan untuk menemani makan Anda." },
+  { id: 9, nama: "Paket Keluarga Sultan", kategori: "paket", emoji: "👨‍👩‍👧‍👦", harga: 160000, badge: "Hemat 30%", badgeType: "green", desc: "4 kebab sapi + 2 box meal + 4 minuman. Paket terlengkap untuk keluarga!" },
+  { id: 10, nama: "Paket Berdua Romantis", kategori: "paket", emoji: "💑", harga: 90000, badge: "Favorit", badgeType: "", desc: "2 kebab premium + 2 minuman + 1 dessert. Makan malam spesial bersama pasangan." },
+];
+
+let cart = 0;
+let currentFilter = 'semua';
+
+function renderMenu(filter) {
+  const grid = document.getElementById('menuGrid');
+  const filtered = filter === 'semua' ? menus : menus.filter(m => m.kategori === filter);
+  grid.innerHTML = filtered.map(m => `
+    <div class="menu-card" data-cat="${m.kategori}">
+      <div class="card-img" style="background: ${getBg(m.kategori)}">
+        ${m.badge ? `<div class="card-badge ${m.badgeType}">${m.badge}</div>` : ''}
+        <span style="font-size:4rem; position:relative; z-index:1;">${m.emoji}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${m.nama}</div>
+        <div class="card-desc">${m.desc}</div>
+        <div class="card-footer">
+          <div class="card-price">
+            Rp ${m.harga.toLocaleString('id')} <span>/ porsi</span>
+          </div>
+          <button class="btn-cart" onclick="addCart('${m.nama}')">
+            🛒 Tambah
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getBg(cat) {
+  const map = {kebab:'#2C1F10', box:'#3D1515', minuman:'#0F2A1A', paket:'#1A1535'};
+  return map[cat] || '#2C1F10';
+}
+
+function filterMenu(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu(cat);
+}
+
+function addCart(nama) {
+  cart++;
+  document.getElementById('cartCount').textContent = cart;
+  const n = document.getElementById('notif');
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 2500);
+}
+
+function scrollToPesan() {
+  document.getElementById('pesan').scrollIntoView({ behavior: 'smooth' });
+}
+
+function submitOrder() {
+  const nama = document.getElementById('fNama').value;
+  const wa = document.getElementById('fWa').value;
+  const alamat = document.getElementById('fAlamat').value;
+  const menu = document.getElementById('fMenu').value;
+  const jumlah = document.getElementById('fJumlah').value;
+  const catatan = document.getElementById('fCatatan').value;
+  const bayar = document.getElementById('fPembayaran').value;
+
+  if (!nama || !wa || !alamat || !menu) {
+    alert('Mohon lengkapi data: Nama, WhatsApp, Alamat, dan Menu terlebih dahulu.');
+    return;
+  }
+
+  const pesan = encodeURIComponent(
+    `Halo Bang Afan Kebab! Saya ingin memesan:\n\n` +
+    `👤 Nama: ${nama}\n` +
+    `📞 WA: ${wa}\n` +
+    `📍 Alamat: ${alamat}\n` +
+    `🌯 Menu: ${menu}\n` +
+    `🔢 Jumlah: ${jumlah} porsi\n` +
+    `📝 Catatan: ${catatan || '-'}\n` +
+    `💳 Pembayaran: ${bayar}\n\n` +
+    `Mohon konfirmasi harga dan estimasi pengiriman. Terima kasih! 🙏`
+  );
+
+  window.open(`https://wa.me/6281234567890?text=${pesan}`, '_blank');
+}
+
+renderMenu('semua');
+</script>
+</body>
+</html>
