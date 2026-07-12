@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Profesional | Neumorphism + Particles + Scroll Reveal</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Boxicons (Library Icon Modern) -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <style>
+        /* === CSS VARIABLES (THEME CONFIG) === */
+        :root {
+            --bg-color: #e6eef5; 
+            --text-main: #1e293b; 
+            --text-muted: #64748b;
+            --gradient: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+            --shadow-light: #ffffff;
+            --shadow-dark: #c3d0df;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a2235; 
+            --text-main: #f8fafc; 
+            --text-muted: #94a3b8;
+            --shadow-light: #222d45;
+            --shadow-dark: #121725;
+        }
+
+        /* === GLOBAL RESET === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 120px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* === CANVAS PARTICLES BACKGROUND === */
+        #particles-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; pointer-events: none;
+        }
+
+        /* === SCROLL ANIMATION CLASSES === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* === NEUMORPHISM UTILITIES === */
+        .neu-up {
+            border-radius: 20px;
+            background: var(--bg-color);
+            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+        }
+
+        .neu-down {
+            border-radius: 20px;
+            background: var(--bg-color);
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* === LAYOUT & CONTAINERS === */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.2rem; font-weight: 700; margin-bottom: 3rem; }
+
+        /* === NAVBAR BAWAH === */
+        nav {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            padding: 15px 25px; border-radius: 50px; z-index: 1000;
+            display: flex; justify-content: center; align-items: center; gap: 15px;
+            opacity: 0;
+            animation: navSlideUp 0.8s cubic-bezier(0.5, 0, 0, 1) 0.5s forwards;
+        }
+
+        @keyframes navSlideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(50px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .nav-links { display: flex; gap: 15px; list-style: none; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-muted); font-size: 1.5rem;
+            width: 50px; height: 50px; display: flex; justify-content: center;
+            align-items: center; border-radius: 50%; transition: all 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #0072ff; box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+        }
+        .divider { width: 2px; height: 30px; background: var(--shadow-dark); border-radius: 5px; }
+        .theme-toggle {
+            width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; font-size: 1.5rem;
+            color: var(--text-muted); outline: none; background: transparent; transition: all 0.3s ease;
+        }
+        .theme-toggle:active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); color: #0072ff; }
+
+        /* === 1. HERO SECTION === */
+        #hero { min-height: 90vh; display: flex; align-items: center; }
+        .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .hero-text h3 { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 10px; }
+        .hero-text h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
+        .hero-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px; }
+        .btn-group { display: flex; gap: 20px; }
+        .btn { padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; display: inline-block; }
+        .btn-primary { background: var(--gradient); color: white; box-shadow: 6px 6px 15px rgba(0, 114, 255, 0.3), -6px -6px 15px var(--shadow-light); }
+        .btn-secondary { color: var(--text-main); }
+        .btn-primary:active, .btn-secondary:active { transform: scale(0.95); }
+
+        /* === PROFIL BORDER ANIMASI === */
+        .hero-img-container { 
+            width: 350px; 
+            height: 350px; 
+            border-radius: 50%; 
+            margin: auto; 
+            position: relative; /* Penting untuk pseudo-element */
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+
+        /* Lingkaran Gradient Berputar */
+        .hero-img-container::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* Gradient Biru - Putih - Hitam - Biru (agar warnanya menyambung mulus) */
+            background: conic-gradient(from 0deg, #0072ff, #ffffff, #000000, #0072ff);
+            animation: spinBorder 4s linear infinite; /* Kecepatan putaran 4 detik */
+        }
+
+        /* Latar Dalam (Menutupi bagian tengah gradient agar jadi border) */
+        .hero-img-container::after {
+            content: "";
+            position: absolute;
+            width: 92%; /* Menentukan ketebalan border (semakin kecil angkanya, border semakin tebal) */
+            height: 92%;
+            background-color: var(--bg-color); /* Warnanya menyesuaikan mode terang/gelap */
+            border-radius: 50%;
+            transition: background-color 0.4s ease;
+        }
+
+        .hero-img { 
+            width: 84%; /* Memastikan gambar pas di dalam lingkaran inner */
+            height: 84%; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            position: relative; /* Agar gambar berada di atas efek animasi */
+            z-index: 10;
+        }
+
+        /* Keyframes untuk Putaran 360 Derajat */
+        @keyframes spinBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* === KONTEN LAINNYA === */
+        .grid-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
+        .card { padding: 40px; }
+        .tech-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 800px; margin: 0 auto; }
+        .tech-pill { padding: 12px 25px; font-weight: 500; display: flex; gap: 10px; }
+        
+        .project-grid, .cert-grid, .testi-grid { display: grid; gap: 30px; }
+        .project-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .cert-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .testi-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        
+        .project-card, .cert-card, .testi-card, .exp-card { padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+        .project-img { height: 200px; border-radius: 15px; display: flex; justify-content: center; align-items: center; color: var(--text-muted); }
+        .tag { font-size: 0.8rem; padding: 5px 12px; border-radius: 10px; color: #0072ff; }
+        .exp-container { display: flex; flex-direction: column; gap: 25px; max-width: 800px; margin: 0 auto; }
+        
+        /* === KONTAK === */
+        .contact-wrapper { max-width: 600px; margin: 0 auto; padding: 40px; }
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 15px; border: none; outline: none;
+            color: var(--text-main); font-size: 1rem; resize: none; background: transparent;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero-content, .grid-2 { grid-template-columns: 1fr; text-align: center; }
+            .btn-group { justify-content: center; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-img-container { width: 280px; height: 280px; }
+            nav { padding: 10px 15px; gap: 10px; width: 95%; }
+            .nav-links { gap: 8px; }
+            .nav-links a, .theme-toggle { width: 42px; height: 42px; font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- KANVAS BACKGROUND PARTICLES -->
+    <canvas id="particles-bg"></canvas>
+
+    <!-- NAVBAR BAWAH -->
+    <nav class="neu-up">
+        <ul class="nav-links">
+            <li><a href="#hero" class="active" title="Beranda"><i class='bx bx-home-alt'></i></a></li>
+            <li><a href="#about" title="Tentang Saya"><i class='bx bx-user'></i></a></li>
+            <li><a href="#projects" title="Projek"><i class='bx bx-code-alt'></i></a></li>
+            <li><a href="#experience" title="Pengalaman Kerja"><i class='bx bx-briefcase'></i></a></li>
+            <li><a href="#contact" title="Kontak"><i class='bx bx-envelope'></i></a></li>
+        </ul>
+        <div class="divider"></div>
+        <button class="theme-toggle" id="theme-btn" title="Ganti Tema">
+            <i class='bx bx-moon' id="theme-icon"></i>
+        </button>
+    </nav>
+
+    <!-- 1. HERO -->
+    <section id="hero" class="container">
+        <div class="hero-content">
+            <div class="hero-text reveal delay-100">
+                <h3>Halo, Selamat Datang! 👋</h3>
+                <h1>Saya <span class="gradient-text">Fullstack Developer</span></h1>
+                <p>Membangun antarmuka web modern yang estetis dan mengembangkan sistem backend yang tangguh untuk solusi digital masa depan.</p>
+                <div class="btn-group">
+                    <a href="#projects" class="btn btn-primary">Lihat Projek</a>
+                    <a href="#contact" class="btn btn-secondary neu-up">Hubungi Saya</a>
+                </div>
+            </div>
+            
+            <!-- GAMBAR PROFIL DENGAN EFEK ANIMASI GRADIENT -->
+            <div class="hero-img-container neu-up reveal-right delay-300">
+                <img src="https://ui-avatars.com/api/?name=Fullstack+Dev&background=0072ff&color=fff&size=350" alt="Profile" class="hero-img">
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- 2. TENTANG SAYA -->
+    <section id="about" class="container">
+        <h2 class="section-title reveal"><span class="gradient-text">Tentang Saya</span></h2>
+        <div class="grid-2">
+            <div class="neu-down reveal delay-100" style="border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                <h3 style="color: var(--text-muted); text-align:center;">Dedikasi &<br>Kreativitas</h3>
+            </div>
+            <div class="card neu-up reveal delay-200">
+                <h3>Lebih dari sekadar menulis kode.</h3>
+                <br>
+                <p>Saya adalah seorang pengembang perangkat lunak yang berfokus pada pengalaman pengguna (UI/UX) dan arsitektur kode yang bersih. Selalu antusias mempelajari teknologi baru dan menerapkannya dalam proyek nyata.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TECH STACK -->
+    <section id="tech" class="container">
+        <h2 class="section-title reveal">Teknologi & <span class="gradient-text">Keahlian</span></h2>
+        <div class="tech-container">
+            <div class="tech-pill neu-up reveal delay-100">🌐 HTML5 & CSS3</div>
+            <div class="tech-pill neu-up reveal delay-200">⚡ JavaScript (ES6+)</div>
+            <div class="tech-pill neu-up reveal delay-300">⚛️ React.js</div>
+            <div class="tech-pill neu-up reveal delay-100">🔥 Laravel</div>
+            <div class="tech-pill neu-up reveal delay-200">🟢 Node.js</div>
+            <div class="tech-pill neu-up reveal delay-300">🎨 Tailwind CSS</div>
+        </div>
+    </section>
+
+    <!-- 4. FEATURED PROJECTS -->
+    <section id="projects" class="container">
+        <h2 class="section-title reveal">Projek <span class="gradient-text">Unggulan</span></h2>
+        <div class="project-grid">
+            <div class="project-card neu-up reveal delay-100">
+                <div class="project-img neu-down">Preview Gambar</div>
+                <h3>E-Commerce Dashboard</h3>
+                <p>Sistem manajemen inventaris untuk UMKM dengan grafik real-time.</p>
+                <div style="display: flex; gap:10px;">
+                    <span class="tag neu-down">React</span>
+                    <span class="tag neu-down">Laravel</span>
+                </div>
+            </div>
+            <div class="project-card neu-up reveal delay-200">
+                <div class="project-img neu-down">Preview Gambar</div>
+                <h3>Sistem Reservasi Klinik</h3>
+                <p>Aplikasi web pemesanan jadwal dokter dan manajemen pasien.</p>
+                <div style="display: flex; gap:10px;">
+                    <span class="tag neu-down">Node.js</span>
+                    <span class="tag neu-down">MySQL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PENGALAMAN KERJA -->
+    <section id="experience" class="container">
+        <h2 class="section-title reveal"><span class="gradient-text">Pengalaman</span> Kerja</h2>
+        <div class="exp-container">
+            <div class="exp-card neu-up reveal delay-100">
+                <span style="color:#0072ff; font-weight:600;">Jan 2022 - Sekarang</span>
+                <h3>Fullstack Web Developer</h3>
+                <p>Mengembangkan dan memelihara aplikasi web skala besar. Berhasil mengoptimalkan waktu muat API hingga 40%.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SERTIFIKAT -->
+    <section id="certificates" class="container">
+        <h2 class="section-title reveal">Penghargaan & <span class="gradient-text">Sertifikat</span></h2>
+        <div class="cert-grid">
+            <div class="cert-card neu-up reveal delay-100" style="align-items: center; text-align: center;">
+                <div class="neu-down" style="width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem;">📜</div>
+                <h4>Frontend Developer Expert</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted)">Dicoding Indonesia</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. TESTIMONI -->
+    <section id="testimonials" class="container">
+        <h2 class="section-title reveal">Apa Kata <span class="gradient-text">Mereka?</span></h2>
+        <div class="testi-grid">
+            <div class="testi-card neu-up reveal delay-100">
+                <p style="font-style: italic; color: var(--text-muted); margin-bottom: 20px;">"Kerja sama yang sangat baik! Kualitas kode bersih dan project selesai lebih cepat."</p>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--gradient); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">BD</div>
+                    <div>
+                        <h4>Budi Santoso</h4>
+                        <span style="font-size: 0.8rem; color: var(--text-muted)">CEO, Startup XYZ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. KONTAK -->
+    <section id="contact" class="container">
+        <h2 class="section-title reveal">Mari <span class="gradient-text">Bekerja Sama</span></h2>
+        <div class="contact-wrapper neu-up reveal delay-100">
+            <form action="#">
+                <div class="form-group">
+                    <label style="margin-left: 10px; font-weight: 500;">Nama Lengkap</label>
+                    <input type="text" class="neu-down" placeholder="Masukkan nama kamu">
+                </div>
+                <div class="form-group">
+                    <label style="margin-left: 10px; font-weight: 500;">Email</label>
+                    <input type="email" class="neu-down" placeholder="Masukkan email kamu">
+                </div>
+                <div class="form-group">
+                    <label style="margin-left: 10px; font-weight: 500;">Pesan</label>
+                    <textarea rows="5" class="neu-down" placeholder="Tuliskan pesan..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Kirim Pesan 🚀</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; padding-bottom: 50px;" class="reveal">
+        <h3 class="gradient-text">Portofolio.</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">© 2024 Dibuat dengan cinta & Neumorphism.</p>
+    </footer>
+
+    <!-- SCRIPT TEMA & ACTIVE NAV -->
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        let isDarkMode = false;
+        let particleColor = { r: 0, g: 114, b: 255 }; 
+
+        themeBtn.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('bx-moon');
+                themeIcon.classList.add('bx-sun');
+                particleColor = { r: 0, g: 198, b: 255 };
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.remove('bx-sun');
+                themeIcon.classList.add('bx-moon');
+                particleColor = { r: 0, g: 114, b: 255 };
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+    <!-- SCRIPT SCROLL REVEAL (INTERSECTION OBSERVER) -->
+    <script>
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-right');
+
+            const observerOptions = {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', revealOnScroll);
+    </script>
+
+    <!-- SCRIPT PARTICLES BACKGROUND -->
+    <script>
+        const canvas = document.getElementById("particles-bg");
+        const ctx = canvas.getContext("2d");
+        let particlesArray;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1; 
+                this.speedX = Math.random() * 1 - 0.5; 
+                this.speedY = Math.random() * 1 - 0.5; 
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
+                if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(${particleColor.r}, ${particleColor.g}, ${particleColor.b}, 0.8)`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 10000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = dx * dx + dy * dy;
+                    
+                    if (distance < 15000) { 
+                        opacityValue = 1 - (distance / 15000);
+                        ctx.strokeStyle = `rgba(${particleColor.r}, ${particleColor.g}, ${particleColor.b}, ${opacityValue * 0.4})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            connectParticles();
+        }
+
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+    </script>
+</body>
+</html>
