@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Futuristic Digital Experience</title>
+    <meta name="description" content="Award-Winning Premium Futuristic 3D Landing Page">
+
+    <!-- Fonts: Space Grotesk (Display) & Poppins (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons: RemixIcon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        bg: '#050816',
+                        surface: '#111827',
+                        primary: '#3B82F6',
+                        secondary: '#7C3AED',
+                        accent: '#06B6D4',
+                        textMain: '#F8FAFC',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg text-textMain overflow-x-hidden antialiased selection:bg-secondary selection:text-white">
+
+    <!-- Preloader -->
+    <div id="loader" class="fixed inset-0 z-[999] bg-bg flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="relative w-32 h-32 flex items-center justify-center mb-8">
+            <div class="absolute inset-0 rounded-full border-t-2 border-primary animate-spin"></div>
+            <div class="absolute inset-2 rounded-full border-r-2 border-secondary animate-spin-reverse"></div>
+            <div class="absolute inset-4 rounded-full border-b-2 border-accent animate-spin"></div>
+            <span class="font-display font-bold text-2xl tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">AURA</span>
+        </div>
+        <div class="w-64 h-1 bg-surface rounded-full overflow-hidden">
+            <div id="loader-progress" class="h-full w-0 bg-gradient-to-r from-primary via-secondary to-accent"></div>
+        </div>
+        <div id="loader-text" class="mt-4 font-display text-sm tracking-[0.3em] text-gray-400">0%</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor" class="fixed top-0 left-0 w-8 h-8 border-2 border-primary/50 rounded-full pointer-events-none z-[999] mix-blend-screen transition-transform duration-100 ease-out hidden md:block transform -translate-x-1/2 -translate-y-1/2"></div>
+    <div id="cursor-dot" class="fixed top-0 left-0 w-1.5 h-1.5 bg-accent rounded-full pointer-events-none z-[999] hidden md:block transform -translate-x-1/2 -translate-y-1/2 shadow-[0_0_10px_#06B6D4]"></div>
+
+    <!-- Backgrounds -->
+    <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full -z-20 pointer-events-none"></canvas>
+    <div class="noise-bg fixed inset-0 w-full h-full -z-10 pointer-events-none opacity-[0.03]"></div>
+    
+    <!-- Aurora Gradients -->
+    <div class="fixed top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[150px] -z-10 pointer-events-none mix-blend-screen animate-blob"></div>
+    <div class="fixed bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-secondary/10 rounded-full blur-[150px] -z-10 pointer-events-none mix-blend-screen animate-blob animation-delay-2000"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 top-0 transition-all duration-300 py-6 px-6 lg:px-12">
+        <div class="max-w-7xl mx-auto glass-panel rounded-full px-8 py-4 flex justify-between items-center border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+            <a href="#" class="font-display text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent hover:scale-105 transition-transform">AURA</a>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-white transition-colors cursor-hover">About</a>
+                <a href="#features" class="hover:text-white transition-colors cursor-hover">Features</a>
+                <a href="#portfolio" class="hover:text-white transition-colors cursor-hover">Portfolio</a>
+                <a href="#pricing" class="hover:text-white transition-colors cursor-hover">Pricing</a>
+            </div>
+            
+            <a href="#contact" class="hidden md:flex magnetic-btn px-6 py-2.5 rounded-full bg-white text-bg font-semibold text-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all cursor-hover group">
+                <span class="relative z-10 flex items-center gap-2">Get Started <i class="ri-arrow-right-line group-hover:translate-x-1 transition-transform"></i></span>
+            </a>
+            
+            <button class="md:hidden text-2xl text-white"><i class="ri-menu-4-line"></i></button>
+        </div>
+        <!-- Scroll Progress -->
+        <div class="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-secondary to-accent" id="scroll-progress"></div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
+        <!-- Hologram handles the right side visual centerpiece now -->
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center z-10 relative pointer-events-none">
+            <div class="text-left gs_reveal pointer-events-auto">
+                <div class="inline-flex items-center gap-2 glass-panel px-4 py-2 rounded-full text-xs font-semibold text-accent mb-6 tracking-widest uppercase border border-accent/30 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                    <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                    Holographic Core Interface
+                </div>
+                
+                <h1 class="font-display text-6xl md:text-8xl font-bold tracking-tighter leading-[1.1] mb-6 drop-shadow-2xl">
+                    Design The <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent glow-text">
+                        <span id="typed-text"></span>
+                    </span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-lg leading-relaxed font-light drop-shadow-md bg-bg/20 p-2 rounded-lg backdrop-blur-sm">
+                    Interact with the cinematic 3D core. We craft immersive, million-dollar digital experiences engineered for the futuristic web.
+                </p>
+                
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="#portfolio" class="magnetic-btn px-8 py-4 rounded-full bg-gradient-to-r from-primary to-secondary text-white font-semibold transition-all shadow-[0_0_30px_rgba(124,58,237,0.4)] hover:shadow-[0_0_50px_rgba(124,58,237,0.6)] cursor-hover flex items-center gap-2">
+                        Initialize System <i class="ri-sparkling-fill"></i>
+                    </a>
+                    <a href="#features" class="magnetic-btn px-8 py-4 rounded-full glass-panel text-white font-semibold border border-white/20 hover:bg-white/10 transition-all cursor-hover flex items-center gap-2">
+                        Analyze Core <i class="ri-radar-line text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hidden lg:block h-[600px] w-full relative">
+                <!-- 3D Scene Occupies This Space Visually -->
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce opacity-50 z-20 pointer-events-auto cursor-hover">
+            <span class="text-[10px] tracking-[0.2em] uppercase mb-2">Scroll to Enhance Core</span>
+            <div class="w-4 h-6 rounded-full border border-white flex justify-center p-1">
+                <div class="w-1 h-1 bg-white rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats & About Section -->
+    <section id="about" class="py-32 px-6 relative z-10 border-t border-white/5 bg-surface/30 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto">
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-32" id="stats-container">
+                <div class="text-center gs_reveal">
+                    <h2 class="font-display text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 mb-2"><span class="counter" data-target="99">0</span>%</h2>
+                    <p class="text-sm text-gray-400 tracking-widest uppercase">System Stability</p>
+                </div>
+                <div class="text-center gs_reveal">
+                    <h2 class="font-display text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 mb-2"><span class="counter" data-target="150">0</span>+</h2>
+                    <p class="text-sm text-gray-400 tracking-widest uppercase">Nodes Deployed</p>
+                </div>
+                <div class="text-center gs_reveal">
+                    <h2 class="font-display text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 mb-2"><span class="counter" data-target="12">0</span></h2>
+                    <p class="text-sm text-gray-400 tracking-widest uppercase">Innovation Awards</p>
+                </div>
+                <div class="text-center gs_reveal">
+                    <h2 class="font-display text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 mb-2"><span class="counter" data-target="24">0</span>/7</h2>
+                    <p class="text-sm text-gray-400 tracking-widest uppercase">Core Monitoring</p>
+                </div>
+            </div>
+
+            <!-- About Text -->
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="gs_reveal">
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Shaping the <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">Digital Frontier.</span></h2>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        We merge spatial design, webgl rendering, and high-performance frontend architecture to create websites that don't just exist—they perform, impress, and convert. 
+                    </p>
+                    <p class="text-gray-400 leading-relaxed mb-8">
+                        Our philosophy is built on zero compromises. Pixel-perfect aesthetics met with military-grade engineering.
+                    </p>
+                    <a href="#" class="inline-flex items-center gap-2 text-primary font-medium hover:text-white transition-colors group cursor-hover">
+                        Read Our Manifesto <i class="ri-arrow-right-up-line group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+                <!-- Vertical Timeline -->
+                <div class="relative border-l border-white/10 pl-8 space-y-12 gs_reveal gs_right">
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-bg border-2 border-primary shadow-[0_0_15px_#3B82F6]"></div>
+                        <h4 class="font-display text-xl font-semibold mb-2">Discovery & Architecture</h4>
+                        <p class="text-sm text-gray-500">Mapping the structural blueprint of your digital ecosystem using state-of-the-art wireframing tools.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-bg border-2 border-secondary shadow-[0_0_15px_#7C3AED]"></div>
+                        <h4 class="font-display text-xl font-semibold mb-2">Immersive UI/UX Design</h4>
+                        <p class="text-sm text-gray-500">Crafting cinematic visuals, glassmorphic elements, and 3D interactions tailored to your brand identity.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-bg border-2 border-accent shadow-[0_0_15px_#06B6D4]"></div>
+                        <h4 class="font-display text-xl font-semibold mb-2">WebGL & Frontend Dev</h4>
+                        <p class="text-sm text-gray-500">Bringing designs to life with Three.js, GSAP, and highly optimized Vanilla code for sub-second load times.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional sections kept minimal for overall structure... -->
+    
+    <!-- Libraries via CDN -->
+    <!-- Lenis for Smooth Scrolling -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <!-- GSAP Core & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for WebGL & Post Processing for Hologram -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    
+    <!-- Vanilla Tilt for 3D Cards -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <!-- Typed.js for Hero text animation -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+    <!-- Main Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
